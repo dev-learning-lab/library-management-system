@@ -2,28 +2,27 @@ package com.Dev_Learning_Lab.library_system.service;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
-
 import com.Dev_Learning_Lab.library_system.model.LibraryModel;
 import com.Dev_Learning_Lab.library_system.repository.LibraryRepository;
 
 @Service
 public class LibraryService {
 
-    private final LibraryRepository libraryRepository;
+    private final LibraryRepository libraryRepo;
 
-    public LibraryService(LibraryRepository libraryRepository) {
-        this.libraryRepository = libraryRepository;
+    public LibraryService(LibraryRepository libraryRepo) {
+        this.libraryRepo = libraryRepo;
     }
 
     public List<LibraryModel> getByName(String name) {
-        return libraryRepository.findByNameIgnoreCase(name);
+        return libraryRepo.findByNameIgnoreCase(name);
     }
 
     public List<LibraryModel> getByDate(String date) {
-        return libraryRepository.findByDate(date);
+        return libraryRepo.findByDate(date);
     }
 
     public List<LibraryModel> getByDescription(String description) {
-        return libraryRepository.findByDescription(description);
+        return libraryRepo.findByDescription(description);
     }
 }
