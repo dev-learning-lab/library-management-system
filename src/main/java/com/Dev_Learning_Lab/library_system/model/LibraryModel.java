@@ -13,16 +13,18 @@ public class LibraryModel {
     private String name;
     private String date;
     private String description;
+    private String autor;
 
     public LibraryModel() {
     }
 
-    public LibraryModel(String id, boolean available, String name, String date, String description) {
+    public LibraryModel(String id, boolean available, String name, String date, String description, String autor) {
         this.id = id;
         this.available = available;
         this.name = name;
         this.date = date;
         this.description = description;
+        this.autor  = autor;
     }
 
     public String getId() {
@@ -65,12 +67,21 @@ public class LibraryModel {
         this.description = description;
     }
 
+      public String getautor() {
+        return autor;
+    }
+
+    public void setautor(String autor) {
+        this.autor = autor;
+    }
+
     @Override
     public String toString() {
         return "LibraryModel [id=" + id +
                 ", available=" + available +
                 ", name=" + name +
                 ", date=" + date +
+                ", Autor=" + autor +
                 ", description=" + description + "]";
     }
 }

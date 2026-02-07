@@ -11,4 +11,6 @@ public interface LibraryRepository extends MongoRepository<LibraryModel, String>
     List<LibraryModel> findByDescription(String description);
 
     List<LibraryModel> findByDate(String date);
+
+    List<LibraryModel> findByAutor(String autor);
 }
