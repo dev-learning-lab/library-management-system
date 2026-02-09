@@ -1,6 +1,7 @@
 package com.Dev_Learning_Lab.library_system.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import com.Dev_Learning_Lab.library_system.model.LibraryModel;
 import com.Dev_Learning_Lab.library_system.repository.LibraryRepository;
@@ -10,9 +11,20 @@ public class LibraryService {
 
     private final LibraryRepository libraryRepo;
 
+    
     public LibraryService(LibraryRepository libraryRepo) {
         this.libraryRepo = libraryRepo;
     }
+
+    public LibraryModel getBookById(String id) {
+    return libraryRepo.findById(id)
+            .orElseThrow(() -> new RuntimeException("Book not found"));
+    }
+
+    public List<LibraryModel> getBookByAutor(String autor) {
+         return libraryRepo.findByAutor(autor);
+    }
+
 
     public LibraryModel createBook(LibraryModel book) {
         return libraryRepo.save(book);
@@ -93,6 +105,11 @@ public class LibraryService {
     libraryRepo.save(book);
    
     return book;
+    }
+
+    public List<LibraryModel> getAvailableBooks(){
+
+        return libraryRepo.findByCopiesAvailableGreaterThan(0); 
     }
 
 

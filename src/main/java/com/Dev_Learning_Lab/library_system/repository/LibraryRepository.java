@@ -14,10 +14,11 @@ public interface LibraryRepository extends MongoRepository<LibraryModel, String>
 
     List<LibraryModel> findByCopiesAvailableGreaterThan(int copiesAvailable);
 
-    List<LibraryModel> findByTotalcopies(int totalCopies);
+    List<LibraryModel> findByTotalCopies(int totalCopies);
 
     List<LibraryModel> findByDate(String date);
 
     List<LibraryModel> findByAutor(String autor);
+
 
 }
