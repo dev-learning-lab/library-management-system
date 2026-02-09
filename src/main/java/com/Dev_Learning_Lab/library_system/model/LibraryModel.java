@@ -9,23 +9,36 @@ public class LibraryModel {
     @Id
     private String id;
 
-    private boolean available;
     private String name;
     private String date;
     private String description;
     private String autor;
 
+    private String category;
+    private int copiesAvailable;
+    private int totalCopies;
+
     public LibraryModel() {
     }
 
-    public LibraryModel(String id, boolean available, String name, String date, String description, String autor) {
+    public LibraryModel(String id, String name, String date, String description, String autor,
+                        String category, int copiesAvailable, int totalCopies) {
         this.id = id;
-        this.available = available;
         this.name = name;
         this.date = date;
         this.description = description;
-        this.autor  = autor;
+        this.autor = autor;
+        this.category = category;
+        this.copiesAvailable = copiesAvailable;
+        this.totalCopies = totalCopies;
     }
+
+    // ✅ DISPONIBILIDAD AUTOMÁTICA (NO se guarda en Mongo)
+    public boolean isAvailable() {
+        return copiesAvailable > 0;
+    }
+
+    // GETTERS & SETTERS
 
     public String getId() {
         return id;
@@ -33,14 +46,6 @@ public class LibraryModel {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public boolean isAvailable() {
-        return available;
-    }
-
-    public void setAvailable(boolean available) {
-        this.available = available;
     }
 
     public String getName() {
@@ -67,21 +72,48 @@ public class LibraryModel {
         this.description = description;
     }
 
-      public String getautor() {
+    public String getAutor() {
         return autor;
     }
 
-    public void setautor(String autor) {
+    public void setAutor(String autor) {
         this.autor = autor;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getCopiesAvailable() {
+        return copiesAvailable;
+    }
+
+    public void setCopiesAvailable(int copiesAvailable) {
+        this.copiesAvailable = copiesAvailable;
+    }
+
+    public int getTotalCopies() {
+        return totalCopies;
+    }
+
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
     }
 
     @Override
     public String toString() {
         return "LibraryModel [id=" + id +
-                ", available=" + available +
                 ", name=" + name +
+                ", autor=" + autor +
+                ", category=" + category +
                 ", date=" + date +
-                ", Autor=" + autor +
-                ", description=" + description + "]";
+                ", description=" + description +
+                ", totalCopies=" + totalCopies +
+                ", copiesAvailable=" + copiesAvailable +
+                ", available=" + isAvailable() + "]";
     }
 }
