@@ -1,28 +1,26 @@
 package com.Dev_Learning_Lab.library_system.model;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "library")
 public class LibraryModel {
-
     @Id
     private String id;
-
     private String name;
     private String date;
     private String description;
     private String autor;
-
     private String category;
     private int copiesAvailable;
     private int totalCopies;
+    
+    private double price;
 
     public LibraryModel() {
     }
 
     public LibraryModel(String id, String name, String date, String description, String autor,
-                        String category, int copiesAvailable, int totalCopies) {
+                        String category, int copiesAvailable, int totalCopies, double price) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -31,14 +29,12 @@ public class LibraryModel {
         this.category = category;
         this.copiesAvailable = copiesAvailable;
         this.totalCopies = totalCopies;
+        this.price = price;
     }
 
-    // ✅ DISPONIBILIDAD AUTOMÁTICA (NO se guarda en Mongo)
     public boolean isAvailable() {
         return copiesAvailable > 0;
     }
-
-    // GETTERS & SETTERS
 
     public String getId() {
         return id;
@@ -104,6 +100,14 @@ public class LibraryModel {
         this.totalCopies = totalCopies;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "LibraryModel [id=" + id +
@@ -114,6 +118,7 @@ public class LibraryModel {
                 ", description=" + description +
                 ", totalCopies=" + totalCopies +
                 ", copiesAvailable=" + copiesAvailable +
+                ", price=" + price +
                 ", available=" + isAvailable() + "]";
     }
 }
