@@ -1,34 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, useEffect } from 'react'
+import bookService from './bookService'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [books, setBooks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // Cargar libros cuando se monta el componente
+  useEffect(() => {
+    loadBooks()
+  }, [])
+
+  const loadBooks = async () => {
+    try {
+      setLoading(true)
+      const response = await bookService.getAllBooks()
+      setBooks(response.data)
+      setError(null)
+    } catch (err) {
+      setError('Error al cargar los libros: ' + err.message)
+      console.error(err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleRent = async (id) => {
+    try {
+      await bookService.rentBook(id)
+      alert('¡Libro rentado!')
+      loadBooks() // Recargar lista
+    } catch (err) {
+      alert('Error: ' + (err.response?.data || err.message))
+    }
+  }
+
+  if (loading) return <div>Cargando libros...</div>
+  if (error) return <div style={{color: 'red'}}>{error}</div>
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="App">
+      <h1>📚 Biblioteca</h1>
+      <p>Total de libros: {books.length}</p>
+      
+      <div style={{display: 'grid', gap: '20px', padding: '20px'}}>
+        {books.map(book => (
+          <div key={book.id} style={{
+            border: '1px solid #ccc',
+            padding: '15px',
+            borderRadius: '8px'
+          }}>
+            <h3>{book.name}</h3>
+            <p><strong>Autor:</strong> {book.autor}</p>
+            <p><strong>Categoría:</strong> {book.category}</p>
+            <p><strong>Copias disponibles:</strong> {book.copiesAvailable} / {book.totalCopies}</p>
+            
+            {book.copiesAvailable > 0 ? (
+              <button onClick={() => handleRent(book.id)}>
+                Rentar 📖
+              </button>
+            ) : (
+              <button disabled>No disponible ❌</button>
+            )}
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      {books.length === 0 && (
+        <p>No hay libros en la biblioteca. Usa Postman para crear algunos.</p>
+      )}
+    </div>
   )
 }
 
