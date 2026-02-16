@@ -21,7 +21,12 @@ const bookService = {
 
     returnBook(id) {
         return axios.post(`${API_URL}/${id}/return`);
+    },
+
+    deleteBook(id){
+        return axios.delete(`${API_URL}/${id}`);
     }
+
 };
 
 export default bookService;
