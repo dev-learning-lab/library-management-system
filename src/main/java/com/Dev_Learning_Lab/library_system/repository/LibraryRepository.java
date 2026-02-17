@@ -20,5 +20,5 @@ public interface LibraryRepository extends MongoRepository<LibraryModel, String>
 
     List<LibraryModel> findByAutor(String autor);
 
-
+    List<LibraryModel> findByDateBetween(String fromDate, String toDate);
 }

@@ -125,4 +125,12 @@ public class LibraryController {
         }
     }
 
+    @GetMapping("/date-range")
+    public ResponseEntity<List<LibraryModel>> getByDateRange(
+            @RequestParam String from,
+            @RequestParam String to) {
+        List<LibraryModel> books = libraryService.getBooksByDateRange(from, to);
+        return ResponseEntity.ok(books);
+    }
+
 }
